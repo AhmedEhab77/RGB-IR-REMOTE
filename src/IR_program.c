@@ -16,14 +16,14 @@
 #include "SYSTICK_interface.h"
 #include "IR_config.h"
 
-/********EXTERN VARIABLE FROM MAIN*******/
-extern u8  Data; //MUST HAVE THE SAME NAME IN MAIN
+
 /***********GLOBAL VARIABLES********/
  volatile u8 StartFlag=0;
  volatile u8 FrameData=0;
  volatile u8 Counter=0;
  volatile u32 ArrayFrame[33]={0};
- static void  (*Gp)  (void)=NULL;
+ static void  (*Gpfunction)  (void)=NULL;
+ static u8 *Gp=NULL;
 /***********************************/
 
 void ActionSystick(void)
@@ -38,8 +38,8 @@ void ActionSystick(void)
 		    		SET_BIT(FrameData,i);
 		    	}
 		    }
-		   Data=FrameData;
-		   Gp();
+		   *Gp=FrameData;
+		   Gpfunction();
 			/******RESET VALUES*******/
 			StartFlag=0;
 			FrameData=0;
@@ -64,8 +64,9 @@ void Get_IRFrame(void)
 	}
 }
 
-void IR_VidInit(void  (*Pf)  (void))
+void IR_VidInit(void  (*Pfuction)  (void),u8*Pf)
 {
+	Gpfunction=Pfuction;
 	Gp=Pf;
 	/**********EXTI SET CALL BACK ******/
 	MEXTI_VidSetCallBack(Get_IRFrame,EXTI_LINE_0);
