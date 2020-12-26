@@ -19,8 +19,7 @@
 
 #include "IR_interface.h"
 
-
-u8 Data =0;
+u8 Data=0;
 void PlayFunction(void)
 {
 	switch (Data)
@@ -56,7 +55,7 @@ int main (void)
 	MGPIO_VidSetPinDirection(GPIO_U8_A,GPIO_U8_PIN0,GPIO_INPUT_FLOATING);
 	MGPIO_VidSetGpioDirection(GPIO_U8_B,HALF_GPIO_OUTPUT_2MHZ_PP,GPIO_U8_HIGHREG);
 	/***********IR INIT**********************/
-	IR_VidInit(PlayFunction);
+	IR_VidInit(PlayFunction,&Data);
 	while(1)
 	{
 
