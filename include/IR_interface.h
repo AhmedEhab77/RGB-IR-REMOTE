@@ -7,7 +7,7 @@
 #define   _IR_MACROS_H_
 
 
-void IR_VidInit(void  (*Pf)  (void));
+void IR_VidInit(void  (*Pfuction)  (void),u8*Pf);
 
 u8 IR_u8ReturnData(void);
 
